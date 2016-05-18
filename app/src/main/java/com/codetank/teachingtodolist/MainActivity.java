@@ -1,29 +1,12 @@
 package com.codetank.teachingtodolist;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-
-import com.codetank.teachingtodolist.data.Task;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerView;
-    private TaskAdapter adapter;
-    private ArrayList<Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        recyclerView = (RecyclerView) findViewById(R.id.toDoListRecyclerView);
-        tasks = new ArrayList<>();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addTask();
-            }
-        });
     }
 
     @Override
@@ -66,41 +38,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        loadTasks();
-    }
-
-    private void loadTasks() {
-        adapter = new TaskAdapter(tasks);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    }
-
-    private void saveTask(Task task) {
-        tasks.add(task);
-        loadTasks();
-    }
-
-    private void addTask() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Create Task");
-        builder.setMessage("What do you want to do?");
-        final EditText inputField = new EditText(this);
-        builder.setView(inputField);
-        builder.setNegativeButton("Cancel", null);
-        builder.setPositiveButton("Add Task", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                saveTask(new Task(inputField.getText().toString(), inputField.getText().toString()));
-            }
-        });
-
-        builder.create().show();
-    }
-
 
  }

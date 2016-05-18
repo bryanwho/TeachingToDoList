@@ -3,7 +3,7 @@
     android:id="@+id/taskRowLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="70dp">
+    android:layout_height="wrap_content">
 
 
     <TextView

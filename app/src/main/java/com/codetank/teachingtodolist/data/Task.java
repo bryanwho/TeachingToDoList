@@ -5,8 +5,17 @@ package com.codetank.teachingtodolist.data;
  */
 public class Task {
 
+    public static final String TASKS_ROUTE = "tasks/";
+
     private String taskTitle;
     private String task;
+
+    public Task() {}
+
+    public Task(String task, String taskTitle) {
+        this.task = task;
+        this.taskTitle = taskTitle;
+    }
 
     public String getTaskTitle() {
         return taskTitle;
@@ -22,11 +31,6 @@ public class Task {
 
     public void setTask(String task) {
         this.task = task;
-    }
-
-    public Task(String task, String taskTitle) {
-        this.task = task;
-        this.taskTitle = taskTitle;
     }
 
 
