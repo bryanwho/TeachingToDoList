@@ -1,5 +1,6 @@
 package com.codetank.teachingtodolist;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,21 +22,44 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class TaskListFragment extends Fragment {
 
     public static final String FIRE_BASE_URL = "https://blistering-heat-8433.firebaseio.com/";
+
+
+    OnTaskListFragmentListener mCallback;
 
     private Firebase myFirebaseRef;
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private FloatingActionButton fab;
 
-    public MainActivityFragment() {
+    public TaskListFragment() {
 
+    }
+
+    // Container Activity must implement this interface
+    public interface OnTaskListFragmentListener {
+        void onTaskSelected(Task task);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnTaskListFragmentListener) getActivity();
+            TaskAdapter.ViewHolder.setOnTaskListFragmentListner(mCallback);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnTaskListFragmentlistener");
+        }
     }
 
     @Override
@@ -83,7 +107,10 @@ public class MainActivityFragment extends Fragment {
     }
 
     private void saveTask(Task task) {
-        myFirebaseRef.push().setValue(task);
+        Firebase newRef = myFirebaseRef.push();
+        String postId = newRef.getKey();
+        task.setPostRef(postId);
+        newRef.setValue(task);
     }
 
     private void addTask() {
