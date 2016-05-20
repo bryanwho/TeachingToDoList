@@ -6,32 +6,32 @@ import android.os.Parcelable;
 /**
  * Created by bryan on 5/17/16.
  */
-public class Task implements Parcelable{
+public class Task implements Parcelable {
 
     public static final String TASKS_ROUTE = "tasks/";
 
     private String taskTitle;
     private String task;
-    private String postRef;
+    private String taskId;
 
     public Task() {}
 
-    public Task(String task, String taskTitle, String postRef) {
+    public Task(String task, String taskTitle, String taskId) {
         this.task = task;
         this.taskTitle = taskTitle;
-        this.postRef = postRef;
+        this.taskId = taskId;
     }
 
     public Task(String task, String taskTitle) {
         this(task, taskTitle, "");
     }
 
-    public String getPostRef() {
-        return postRef;
+    public String getTaskId() {
+        return taskId;
     }
 
-    public void setPostRef(String postRef) {
-        this.postRef = postRef;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public String getTaskTitle() {
@@ -53,7 +53,7 @@ public class Task implements Parcelable{
         protected Task(Parcel in) {
             taskTitle = in.readString();
             task = in.readString();
-            postRef = in.readString();
+            taskId = in.readString();
         }
 
         @Override
@@ -65,7 +65,7 @@ public class Task implements Parcelable{
         public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(taskTitle);
             dest.writeString(task);
-            dest.writeString(postRef);
+            dest.writeString(taskId);
         }
 
         @SuppressWarnings("unused")

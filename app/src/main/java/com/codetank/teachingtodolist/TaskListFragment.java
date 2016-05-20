@@ -22,8 +22,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -33,7 +31,7 @@ public class TaskListFragment extends Fragment {
     public static final String FIRE_BASE_URL = "https://blistering-heat-8433.firebaseio.com/";
 
 
-    OnTaskListFragmentListener mCallback;
+    private OnTaskListFragmentListener mCallback;
 
     private Firebase myFirebaseRef;
     private RecyclerView recyclerView;
@@ -107,9 +105,12 @@ public class TaskListFragment extends Fragment {
     }
 
     private void saveTask(Task task) {
+//        Previously written save
+//        myFirebaseRef.push().setValue(task);
+
         Firebase newRef = myFirebaseRef.push();
-        String postId = newRef.getKey();
-        task.setPostRef(postId);
+        String taskId = newRef.getKey();
+        task.setTaskId(taskId);
         newRef.setValue(task);
     }
 

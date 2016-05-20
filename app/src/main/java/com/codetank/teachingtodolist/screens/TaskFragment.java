@@ -32,6 +32,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
 
         void onTaskUpdated(Task task);
     }
+
     public static TaskFragment newInstance(Task task) {
         TaskFragment fragment = new TaskFragment();
 
@@ -80,6 +81,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save_frag_btn:
+                task.setTask(taskDescription.getEditableText().toString());
                 if(mCallback != null) {
                     mCallback.onTaskUpdated(task);
                 }

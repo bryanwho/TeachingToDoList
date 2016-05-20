@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements TaskListFragment.
 
     @Override
     public void onTaskSelected(Task task) {
-        replaceFragment(new TaskFragment().newInstance(task));
+        replaceFragment(TaskFragment.newInstance(task));
     }
 
     @Override
@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements TaskListFragment.
         //save task
         Map<String, Object> nickname = new HashMap<>();
         nickname.put("taskTitle", task.getTaskTitle());
-        nickname.put("task", task.getTaskTitle());
         nickname.put("task", task.getTask());
-        Firebase myFirebaseRef = new Firebase(TaskListFragment.FIRE_BASE_URL + Task.TASKS_ROUTE).child(task.getPostRef());
+
+        Firebase myFirebaseRef = new Firebase(TaskListFragment.FIRE_BASE_URL + Task.TASKS_ROUTE).child(task.getTaskId());
         myFirebaseRef.updateChildren(nickname);
     }
 }
