@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements TaskListFragment.
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container_layout, newFragment).addToBackStack(null).commit();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

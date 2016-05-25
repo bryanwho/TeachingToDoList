@@ -88,11 +88,6 @@ public class TaskListFragment extends Fragment {
         return layout;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private void loadTasks(ArrayList<Task> tasks) {
 
         if(tasks == null) {
@@ -131,11 +126,23 @@ public class TaskListFragment extends Fragment {
         builder.create().show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //load tasks again if there is no adapter set on recyclerview
+        if(recyclerView.getAdapter() == null) {
+            if(TaskAdapter.tasks != null) {
+                loadTasks(TaskAdapter.tasks);
+            }
+        }
+    }
+
     ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
-            ArrayList<Task> tasks = new ArrayList<>();
+             ArrayList<Task> tasks = new ArrayList<>();
 
             for (DataSnapshot taskSnapshot: dataSnapshot.getChildren()) {
                 Task task = taskSnapshot.getValue(Task.class);

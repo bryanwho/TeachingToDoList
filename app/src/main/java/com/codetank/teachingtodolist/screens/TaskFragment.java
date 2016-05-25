@@ -4,35 +4,35 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.codetank.teachingtodolist.R;
-import com.codetank.teachingtodolist.TaskAdapter;
 import com.codetank.teachingtodolist.data.Task;
 
 /**
  * Created by bryan on 5/19/16.
  */
-public class TaskFragment extends Fragment implements View.OnClickListener{
+public class TaskFragment extends Fragment {
 
     public static final String TASK_KEY = "task_key";
 
     private EditText taskDescription;
-    private Button saveFragButton;
     private OnTaskFragmentListener mCallback;
-
     private Task task;
+
+
 
     public interface OnTaskFragmentListener {
 
         void onTaskUpdated(Task task);
-    }
 
+    }
     public static TaskFragment newInstance(Task task) {
         TaskFragment fragment = new TaskFragment();
 
@@ -57,10 +57,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.task_fragment, container, false);
-
         taskDescription = (EditText) view.findViewById(R.id.task_fullDescription);
-        saveFragButton = (Button) view.findViewById(R.id.save_frag_btn);
-        saveFragButton.setOnClickListener(this);
 
         return view;
     }
@@ -78,15 +75,15 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.save_frag_btn:
-                task.setTask(taskDescription.getEditableText().toString());
-                if(mCallback != null) {
-                    mCallback.onTaskUpdated(task);
-                }
-                break;
+    public void onPause() {
+        super.onPause();
+
+        if(task == null || mCallback == null)  {
+            return;
         }
+
+        task.setTask(taskDescription.getEditableText().toString());
+        mCallback.onTaskUpdated(task);
     }
 
 
