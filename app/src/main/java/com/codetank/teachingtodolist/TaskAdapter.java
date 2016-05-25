@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import com.codetank.teachingtodolist.data.Task;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by bryan on 5/17/16.
