@@ -99,31 +99,8 @@ public class TaskListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void saveTask(Task task) {
-//        Previously written save
-//        myFirebaseRef.push().setValue(task);
-
-        Firebase newRef = myFirebaseRef.push();
-        String taskId = newRef.getKey();
-        task.setTaskId(taskId);
-        newRef.setValue(task);
-    }
-
     private void addTask() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Create Task");
-        builder.setMessage("What do you want to do?");
-        final EditText inputField = new EditText(getActivity());
-        builder.setView(inputField);
-        builder.setNegativeButton("Cancel", null);
-        builder.setPositiveButton("Add Task", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                saveTask(new Task(inputField.getText().toString(), inputField.getText().toString()));
-            }
-        });
-
-        builder.create().show();
+        mCallback.onTaskSelected(new Task());
     }
 
     @Override

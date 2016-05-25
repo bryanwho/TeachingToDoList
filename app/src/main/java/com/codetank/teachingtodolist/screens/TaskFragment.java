@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.codetank.teachingtodolist.R;
+import com.codetank.teachingtodolist.TaskListFragment;
 import com.codetank.teachingtodolist.data.Task;
+import com.firebase.client.Firebase;
 
 /**
  * Created by bryan on 5/19/16.
@@ -19,6 +21,7 @@ public class TaskFragment extends Fragment {
 
     public static final String TASK_KEY = "task_key";
 
+    private Firebase myFirebaseRef;
     private EditText taskDescription;
     private OnTaskFragmentListener mCallback;
     private Task task;
@@ -38,6 +41,13 @@ public class TaskFragment extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(getActivity());
+        myFirebaseRef = new Firebase(TaskListFragment.FIRE_BASE_URL + Task.TASKS_ROUTE);
     }
 
     @Override
@@ -79,8 +89,19 @@ public class TaskFragment extends Fragment {
             return;
         }
 
+        saveTask(task);
         task.setTask(taskDescription.getEditableText().toString());
         mCallback.onTaskUpdated(task);
+    }
+
+    private void saveTask(Task task) {
+//        Previously written save
+//        myFirebaseRef.push().setValue(task);
+
+        Firebase newRef = myFirebaseRef.push();
+        String taskId = newRef.getKey();
+        task.setTaskId(taskId);
+        newRef.setValue(task);
     }
 
 
