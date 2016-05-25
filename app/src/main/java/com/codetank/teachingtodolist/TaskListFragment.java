@@ -100,7 +100,19 @@ public class TaskListFragment extends Fragment {
     }
 
     private void addTask() {
-        mCallback.onTaskSelected(new Task());
+        Task task = new Task();
+        saveTask(task);
+        mCallback.onTaskSelected(task);
+    }
+
+    private void saveTask(Task task) {
+//        Previously written save
+//        myFirebaseRef.push().setValue(task);
+
+        Firebase newRef = myFirebaseRef.push();
+        String taskId = newRef.getKey();
+        task.setTaskId(taskId);
+        newRef.setValue(task);
     }
 
     @Override
